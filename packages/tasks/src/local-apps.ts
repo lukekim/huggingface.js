@@ -315,6 +315,45 @@ const snippetDockerModelRunner = (model: ModelData, filepath?: string): string =
 	return `docker model run hf.co/${model.id}${getQuantTag(filepath)}`;
 };
 
+const snippetSpiceAI = (model: ModelData, filepath?: string): LocalAppSnippet[] => {
+	const command = (binary: string) =>
+		["# Install platform specific acceleration (CUDA or Metal):", `${binary}`];
+	return [
+		{
+			title: "Install from binary",
+			setup: "curl https://install.spiceai.org | /bin/bash",
+			content: command("spice install ai"),
+		},
+		{
+			title: "Install from Brew",
+			setup: "brew install spiceai/spiceai/spiceai",
+			content: command("spice install ai"),
+		},
+		{
+			title: "Use Docker image (CUDA)",
+			setup: [
+				// prettier-ignore
+				"# Pull the image:",
+				"docker pull spiceai/spiceai:latest-models-cuda",
+			].join("\n"),
+			content: command(
+				"docker run -p 8080:8080 --name spiceai -v $PWD/models:/build/models spiceai/spiceai:latest-models-cuda"
+			),
+		},
+		{
+			title: "Use Docker image (Apple Silicon)",
+			setup: [
+				// prettier-ignore
+				"# Pull the image:",
+				"docker pull spiceai/spiceai:latest-models-metal",
+			].join("\n"),
+			content: command(
+				"docker run -p 8080:8080 --name spiceai -v $PWD/models:/build/models spiceai/spiceai:latest-models-metal"
+			),
+		},
+	];
+};
+
 /**
  * Add your new local app here.
  *
@@ -497,6 +536,7 @@ export const LOCAL_APPS = {
 		docsUrl: "https://spiceai.org/docs/components/models/huggingface",
 		mainTask: "text-generation",
 		displayOnModelPage: isLlamaCppGgufModel,
+		snippet: snippetSpiceAI,
 	},
 } satisfies Record<string, LocalApp>;
 
