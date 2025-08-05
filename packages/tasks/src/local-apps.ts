@@ -492,6 +492,12 @@ export const LOCAL_APPS = {
 		displayOnModelPage: isLlamaCppGgufModel,
 		snippet: snippetDockerModelRunner,
 	},
+	spiceai: {
+		prettyLabel: "Spice.ai OSS",
+		docsUrl: "https://spiceai.org/docs/components/models/huggingface",
+		mainTask: "text-generation",
+		displayOnModelPage: isLlamaCppGgufModel,
+	},
 } satisfies Record<string, LocalApp>;
 
 export type LocalAppKey = keyof typeof LOCAL_APPS;
