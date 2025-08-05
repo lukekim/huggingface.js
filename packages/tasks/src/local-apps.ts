@@ -340,17 +340,6 @@ const snippetSpiceAI = (model: ModelData, filepath?: string): LocalAppSnippet[] 
 				"docker run -p 8080:8080 --name spiceai -v $PWD/models:/build/models spiceai/spiceai:latest-models-cuda"
 			),
 		},
-		{
-			title: "Use Docker image (Apple Silicon)",
-			setup: [
-				// prettier-ignore
-				"# Pull the image:",
-				"docker pull spiceai/spiceai:latest-models-metal",
-			].join("\n"),
-			content: command(
-				"docker run -p 8080:8080 --name spiceai -v $PWD/models:/build/models spiceai/spiceai:latest-models-metal"
-			),
-		},
 	];
 };
 
